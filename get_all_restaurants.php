@@ -3,23 +3,6 @@
    // connect to the db
    include './config/connect_db.php';
 
-   // get users
-   $sql = 'SELECT * FROM users';
-
-   $result = mysqli_query($conn, $sql);
-
-   $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-   foreach($users as $user){
-      echo $user['user_id'] . '<br>';
-      echo $user['name'] . '<br>';
-      echo $user['type'] . '<br>';
-      echo $user['email'] . '<br>';
-   }
-
-   mysqli_free_result($result);
-
-
    // get restaurants
    $sql_1 = 'SELECT * FROM restaurants';
 
