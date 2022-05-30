@@ -3,6 +3,10 @@
    // connect to the db
    include './config/connect_db.php';
 
+   if(isset($_GET['submit'])){
+      echo "you searched for " . $_GET['name'];
+   }
+
    // get users
    $sql = 'SELECT * FROM users';
 

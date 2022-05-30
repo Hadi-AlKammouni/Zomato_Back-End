@@ -1,4 +1,17 @@
 <?php
+  header('Access-Control-Allow-Origin: *');
+
+   if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+          // may also be using PUT, PATCH, HEAD etc
+         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+      }
+
+      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+         header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+      }
+      exit(0);
+   }
 
    // connect to the db
    include './config/connect_db.php';
@@ -14,7 +27,7 @@
 
       if($user){
          echo 'User already exists, Choose another email address';
-      } else{
+      } else {
          $type = 'user';
          $password = hash("sha256",mysqli_real_escape_string($conn, $_POST['password']));
          $sql = "INSERT INTO  users(name, email, password, type) VALUES('$name', '$email', '$password', '$type')";
@@ -22,7 +35,7 @@
          //save to db and check
          if(mysqli_query($conn, $sql)){
             // success
-            header('Location: sign-up.php');
+            header('Location: sign_up.php');
          } else{
             // error
             echo 'query error: ' . mysqli_error($conn);
