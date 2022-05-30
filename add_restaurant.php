@@ -22,8 +22,8 @@
          
          if(mysqli_query($conn, $sql)){
             $id = mysqli_query($conn, "SELECT restaurant_id FROM restaurants WHERE restaurant_name = '$restaurant_name'");
-            $id = json_encode($id);
-            echo 'hi';
+            $id = mysqli_fetch_assoc($id);
+            echo json_encode($id);
          }
       }
    }
