@@ -1,22 +1,23 @@
 <?php
-  header('Access-Control-Allow-Origin: *');
+   header('Access-Control-Allow-Origin: *');
+   // header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+   // if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+   //    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+   //        // may also be using PUT, PATCH, HEAD etc
+   //       header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+   //    }
 
-   if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
-          // may also be using PUT, PATCH, HEAD etc
-         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-      }
-
-      if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
-         header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
-      }
-      exit(0);
-   }
+   //    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+   //       header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+   //    }
+   //    exit(0);
+   // }
 
    // connect to the db
    include './config/connect_db.php';
 
-   if(isset($_POST['submit'])){
+   if(isset($_POST['name'])){
+      
       $name = mysqli_real_escape_string($conn, $_POST['name']);
 
       $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -40,20 +41,7 @@
             // error
             echo 'query error: ' . mysqli_error($conn);
          }
+         echo "User has been added"
       }
    }
 ?>
-
-<html>
-   <head>
-      <title>sign up</title>
-   </head>
-   <body>
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-         name:       <input type="text" name="name" placeholder="enter your name">
-         email:      <input type="text" name="email" placeholder="enter your name">
-         password:   <input type="text" name="password" placeholder="enter your name">
-         <input type="submit" name="submit" value="submit">
-      </form>
-   </body>
-</html>
