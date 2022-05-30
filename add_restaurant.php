@@ -1,46 +1,30 @@
 <?php
-
+   header('Access-Control-Allow-Origin: *');
+   // header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+   
    // connect to the db
    include './config/connect_db.php';
 
-   if(isset($_POST['submit'])){
-      $name = mysqli_real_escape_string($conn, $_POST['name']);
+   if(isset($_POST['restaurant_name'])){
+      $restaurant_name = mysqli_real_escape_string($conn, $_POST['restaurant_name']);
+      $test = mysqli_query($conn, "SELECT restaurant_name FROM restaurants WHERE restaurant_name = '$restaurant_name'");
+      $restaurant = mysqli_fetch_assoc($test); 
+      if(isset($restaurant['restaurant_name'])) {
+         echo 'Restaurant name already in use, Please choose another name';
+      }else{
+         $category = mysqli_real_escape_string($conn, $_POST['category']);
+         $description = mysqli_real_escape_string($conn, $_POST['description']);
+         $location = mysqli_real_escape_string($conn, $_POST['location']);
+         $number = mysqli_real_escape_string($conn, $_POST['number']);
 
-      $email = mysqli_real_escape_string($conn, $_POST['email']);
-      $test = mysqli_query($conn, "SELECT * FROM users WHERE email= '$email'");
-      
-      // fetch the result in array bcz we only return one row
-      $user = mysqli_fetch_assoc($test); 
 
-      if($restaurant){
-         echo 'User already exists, Choose another email address';
-      } else{
-         $type = 'user';
-         $password = hash("sha256",mysqli_real_escape_string($conn, $_POST['password']));
-         $sql = "INSERT INTO  users(name, email, password, type) VALUES('$name', '$email', '$password', '$type')";
-
-         //save to db and check
+         $sql = "INSERT INTO  restaurants(restaurant_name, category ,description ,location ,number) VALUES('$restaurant_name', '$category', '$description', '$location', '$number')";
+         
          if(mysqli_query($conn, $sql)){
-            // success
-            header('Location: sign-up.php');
-         } else{
-            // error
-            echo 'query error: ' . mysqli_error($conn);
+            $id = mysqli_query($conn, "SELECT restaurant_id FROM restaurants WHERE restaurant_name = '$restaurant_name'");
+            $id = json_encode($id);
+            echo 'hi';
          }
       }
    }
 ?>
-
-<html>
-   <head>
-      <title>sign up</title>
-   </head>
-   <body>
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-         name:       <input type="text" name="name" placeholder="enter your name">
-         email:      <input type="text" name="email" placeholder="enter your name">
-         password:   <input type="text" name="password" placeholder="enter your name">
-         <input type="submit" name="submit" value="submit">
-      </form>
-   </body>
-</html>
