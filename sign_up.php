@@ -35,8 +35,11 @@
          
          //save to db and check
          if(mysqli_query($conn, $sql)){
+            $id = mysqli_query($conn, "SELECT user_id FROM users WHERE email = '$email'");
+            $id = mysqli_fetch_assoc($id); 
             // success
-            echo "new user created";
+            $id = json_encode($id);
+            echo $id;
          }else{
             // error
             echo 'query error: ';
