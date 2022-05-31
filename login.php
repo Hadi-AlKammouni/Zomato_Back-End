@@ -6,11 +6,14 @@
 
   if(isset($_POST['email'])){
     
-    $email = mysqli_real_escape_string($mysqli, $_POST['email']);
+    $email = $_POST['email'];
     $password = hash("sha256",mysqli_real_escape_string($mysqli, $_POST['password']));
 
-    $test = mysqli_query($mysqli, "SELECT * FROM users WHERE email= '$email' AND password='$password'");
-    $user = mysqli_fetch_assoc($test); 
+    $sql = $mysqli -> prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+    $sql -> bind_param("ss", $email, $password);
+    $sql -> execute();
+    $sql = $sql -> get_result();
+    $user = $sql -> fetch_all(MYSQLI_ASSOC);
     if($user){
       $json = json_encode($user);
       echo $json;

@@ -25,27 +25,23 @@
       $query->bind_param("s", $email);
       $query->execute();
       // fetch the result in array bcz we only return one row
-      $user = $query->get_result(); 
+      $query = $query->get_result(); 
+      $user = $query -> fetch_all(MYSQLI_ASSOC);;
       
       if($user){
          echo 'User already exists, Choose another email address';
       } else {
          $type = 'user';
-         $password = hash("sha256",mysqli_real_escape_string($mysqli, $_POST['pass']));
-         $sql = "INSERT INTO  users(name, email, password, type) VALUES(?,?,?,?)";
+         $password = hash("sha256",mysqli_real_escape_string($mysqli, $_POST['password']));
+         $sql = $mysqli -> prepare("INSERT INTO  users(name, email, password, type) VALUES(?,?,?,?)");
          $sql -> bind_param("ssss", $name,$email,$password,$type);
+         $sql -> execute();
          
-         //save to db and check
-         if(mysqli_query($mysqli, $sql)){
-            $id = mysqli_query($mysqli, "SELECT user_id FROM users WHERE email = '$email'");
-            $id = mysqli_fetch_assoc($id); 
-            // success
-            $id = json_encode($id);
-            echo $id;
-         }else{
-            // error
-            echo 'query error: ';
-         }
+         $id = mysqli_query($mysqli, "SELECT * FROM users WHERE email = '$email'");
+         $id = mysqli_fetch_assoc($id); 
+         
+         $id = json_encode($id);
+         echo $id;
       }
    }
 ?>

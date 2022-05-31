@@ -11,7 +11,7 @@
     $sql -> bind_param("i", $id);
     $sql -> execute();
     $sql = $sql->get_result();
-    $restaurant = $sql -> fetch_all(MYSQLI_ASSOC);;
+    $restaurant = $sql -> fetch_all(MYSQLI_ASSOC);
     
     $json = json_encode($restaurant);
 
