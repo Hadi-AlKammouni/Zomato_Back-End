@@ -3,7 +3,7 @@
 
 
   // connect to the db
-  include './connect_db.php';
+  include './config/connect_db.php';
   
   $id = htmlspecialchars($_GET["id"]);
   if(isset($_GET['id'])){
