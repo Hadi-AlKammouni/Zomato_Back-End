@@ -1,11 +1,10 @@
 <?php
    
    // connect to db
-   $conn = mysqli_connect('localhost', 'jad', 'test123', 'zomato_db');
-   //$mysqli = new mysqli($host, $db_user, $db_pass, $db_name);
+   $mysqli = new mysqli('localhost', 'jad', 'test123', 'zomato_db');
 
    //check error
-   if(!$conn){
+   if(!$mysqli){
       echo 'Connection error: ' . mysqli_connect_error();
    }
 
