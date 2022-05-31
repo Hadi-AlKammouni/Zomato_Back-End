@@ -32,7 +32,8 @@
       } else {
          $type = 'user';
          $password = hash("sha256",mysqli_real_escape_string($mysqli, $_POST['pass']));
-         $sql = "INSERT INTO  users(name, email, password, type) VALUES('$name', '$email', '$password', '$type')";
+         $sql = "INSERT INTO  users(name, email, password, type) VALUES(?,?,?,?)";
+         $sql -> bind_param("ssss", $name,$email,$password,$type);
          
          //save to db and check
          if(mysqli_query($mysqli, $sql)){
