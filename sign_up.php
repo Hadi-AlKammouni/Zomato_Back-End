@@ -21,7 +21,7 @@
       
       $email = $_POST['email'];
       
-      $query = $mysqli->prepare("SELECT * FROM users WHERE email= ?");
+      $query = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
       $query->bind_param("s", $email);
       $query->execute();
       // fetch the result in array bcz we only return one row
