@@ -7,7 +7,7 @@
   
   $id = htmlspecialchars($_GET["id"]);
   if(isset($_GET['id'])){
-    $sql = $mysqli -> prepare("SELECT * FROM restaurants LEFT JOIN reviews on restaurants.restaurant_id = reviews.restaurant_id WHERE restaurants.restaurant_id = ?");
+    $sql = $mysqli -> prepare("SELECT * FROM reviews LEFT JOIN restaurants on restaurants.restaurant_id = reviews.restaurant_id JOIN users on users.user_id = reviews.user_id WHERE restaurants.restaurant_id = ?");
     $sql -> bind_param("i", $id);
     $sql -> execute();
     $sql = $sql->get_result();
