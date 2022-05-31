@@ -10,8 +10,10 @@
 
    $restaurants = mysqli_fetch_all($result_2, MYSQLI_ASSOC);
 
+   $all = [];
    foreach($restaurants as $restaurant){
-      echo json_encode($restaurant);
+      $all[] = $restaurant;
+      
       // echo $restaurant['restaurant_id'] . '<br>';
       // echo $restaurant['restaurant_name'] . '<br>';
       // echo $restaurant['location'] . '<br>';
@@ -19,6 +21,7 @@
       // echo $restaurant['description'] . '<br>';
    }
 
+   echo json_encode($all);
    mysqli_free_result($result_2);
 
    mysqli_close($mysqli);
